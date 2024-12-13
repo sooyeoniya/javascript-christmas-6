@@ -1,5 +1,7 @@
 import { Console } from '@woowacourse/mission-utils';
 import { OUTPUT_MESSAGES } from '../constants/constants.js';
+import getTotalPriceBeforeDiscount from '../utils/getTotalPriceBeforeDiscount.js';
+import parser from '../utils/parser.js';
 
 const OutputView = {
   /**
@@ -26,6 +28,7 @@ const OutputView = {
   printResult(date, menuObj) {
     Console.print(OUTPUT_MESSAGES.RESULT_START(date));
     this.printMenu(menuObj);
+    this.printTotalPriceBeforeDiscount(menuObj);
   },
 
   printMenu(menuObj) {
@@ -34,6 +37,11 @@ const OutputView = {
       Console.print(`${menu} ${quantity}개`);
     });
   },
+
+  printTotalPriceBeforeDiscount(menuObj) {
+    Console.print('\n<할인 전 총주문 금액>');
+    Console.print(`${parser.numberToPrice(getTotalPriceBeforeDiscount(menuObj))}원`);
+  }
 }
 
 export default OutputView;

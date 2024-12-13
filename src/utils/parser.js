@@ -11,6 +11,10 @@ const deleteEmptyValue = (array) => {
   return array.filter((item) => item !== '');
 }
 
+const numberToPrice = (number) => {
+  return number.toLocaleString('ko-KR');
+}
+
 /**
  * [ '티본스테이크-1', '해산물파스타-3' ]
  * [ { menu: '티본스테이크', quantity: 1 }, ]
@@ -32,6 +36,7 @@ const parser = {
   stringToArray,
   deleteEmptyValue,
   splitMenuAndQuantity,
+  numberToPrice,
 }
 
 export default parser;

@@ -3,12 +3,15 @@ import validateMenu from '../validations/validateMenu.js';
 import validateDate from '../validations/validateDate.js';
 import InputView from '../views/InputView.js';
 import OutputView from '../views/OutputView.js';
+import EventManager from '../models/EventManager.js';
 
 class Controller {
   async start() {
     OutputView.printWelcome();
     const date = await this.#getValidatedDate();
     const menuObj = await this.#getValidatedMenu();
+
+    const eventManager = new EventManager(date, menuObj);
 
     OutputView.printResult(date, menuObj);
   }
