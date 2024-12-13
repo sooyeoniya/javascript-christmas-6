@@ -16,6 +16,13 @@ export const BADGE = Object.freeze({
   [TOTAL_DISCOUNT.STAR]: '별',
 });
 
+export const MENU_TYPE = Object.freeze({
+  APPETIZER: 'appetizer',
+  MAIN: 'main',
+  DESSERT: 'dessert',
+  DRINK: 'drink',
+})
+
 export const MENUS = Object.freeze([
   { type: 'appetizer', name: '양송이수프', price: 6_000 },
   { type: 'appetizer', name: '타파스', price: 5_500 },

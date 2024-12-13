@@ -1,4 +1,4 @@
-import { MENUS, WEEKEND_INDEX, SPECIAL_DAYS, NONE, WEEK_DISCOUNT, TOTAL_DISCOUNT, BADGE } from '../constants/constants.js';
+import { MENUS, WEEKEND_INDEX, SPECIAL_DAYS, NONE, WEEK_DISCOUNT, TOTAL_DISCOUNT, BADGE, MENU_TYPE } from '../constants/constants.js';
 
 class EventManager {
   /** @type {number} 크리스마스 디데이 할인 */ #ddayDiscount = 0;
@@ -125,7 +125,7 @@ class EventManager {
   #calculateWeekendDiscount(menuObj) {
     const onlyMenuNameArray = menuObj.map(({menu}) => menu);
     const filteredMenus = MENUS.filter((menuInfo) => {
-      return onlyMenuNameArray.includes(menuInfo.name) && menuInfo.type === 'main'
+      return onlyMenuNameArray.includes(menuInfo.name) && menuInfo.type === MENU_TYPE.MAIN
     });
     if (filteredMenus) filteredMenus.forEach(({ quantity }) => this.#weekendDiscount += quantity * WEEK_DISCOUNT);
   }
@@ -137,7 +137,7 @@ class EventManager {
   #calculateWeekdayDiscount(menuObj) {
     const onlyMenuNameArray = menuObj.map(({menu}) => menu);
     const filteredMenus = MENUS.filter((menuInfo) => {
-      return onlyMenuNameArray.includes(menuInfo.name) && menuInfo.type === 'dessert'
+      return onlyMenuNameArray.includes(menuInfo.name) && menuInfo.type === MENU_TYPE.DESSERT
     });
     if (filteredMenus) filteredMenus.forEach(({ quantity }) => this.#weekdayDiscount += quantity * WEEK_DISCOUNT);
   }

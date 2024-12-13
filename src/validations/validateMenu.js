@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES, MENUS } from '../constants/constants.js';
+import { ERROR_MESSAGES, MENUS, MENU_TYPE } from '../constants/constants.js';
 import parser from '../utils/parser.js';
 
 /**
@@ -64,7 +64,7 @@ const isDuplicateMenu = (onlyMenusArray) => {
  */
 const isOnlyDrink = (onlyMenusArray) => {
   const inputMenuInfo = MENUS.filter((menuInfo) => onlyMenusArray.includes(menuInfo.name));
-  if (inputMenuInfo.every((menuInfo) => menuInfo.type === 'drink')) {
+  if (inputMenuInfo.every((menuInfo) => menuInfo.type === MENU_TYPE.DRINK)) {
     throw new Error(ERROR_MESSAGES.INVALID_ORDER);
   }
 }
