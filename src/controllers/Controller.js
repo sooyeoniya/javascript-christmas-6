@@ -8,7 +8,7 @@ class Controller {
   async start() {
     OutputView.printWelcome();
     const date = await this.#getValidatedDate();
-    // const menuObj = await this.#getValidatedMenu();
+    const menuObj = await this.#getValidatedMenu();
 
     // OutputView.printResult();
   }
@@ -30,10 +30,11 @@ class Controller {
     try {
       const menus = await InputView.readMenu();
       const menuArray = parser.stringToArray(menus);
-      validateMenu(menuArray);
+      const parsedMenuArray = parser.deleteEmptyValue(menuArray);
+      validateMenu(parsedMenuArray);
 
-      // TODO: 파싱해서 내보내기 [ { menu: 'xx', quantity: 2 }, { ... } ]
-      return menuArray;
+      // [ { menu: '티본스테이크', quantity: 1 }, ]
+      return parser.splitMenuAndQuantity(menuArray);
     } catch (error) {
       OutputView.printErrorMessage(error.message);
       return this.#getValidatedMenu();

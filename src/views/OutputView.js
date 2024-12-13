@@ -20,8 +20,8 @@ const OutputView = {
   /**
    * 전체 결과를 출력한다.
    */
-  printResult() {
-    Console.print(OUTPUT_MESSAGES.RESULT_START);
+  printResult(date) {
+    Console.print(OUTPUT_MESSAGES.RESULT_START(date));
   },
 
   printMenu() {
