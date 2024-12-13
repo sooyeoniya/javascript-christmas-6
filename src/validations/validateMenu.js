@@ -77,7 +77,7 @@ const isOnlyDrink = (onlyMenusArray) => {
 const isOverQuantity = (onlyQuantityArray) => {
   const sumQuantity = onlyQuantityArray.reduce((eachQuantity, sum) => sum + eachQuantity, 0);
   if (sumQuantity > 20) {
-    throw new Error('20개초과');
+    throw new Error(ERROR_MESSAGES.INVALID_ORDER);
   }
 }
 
