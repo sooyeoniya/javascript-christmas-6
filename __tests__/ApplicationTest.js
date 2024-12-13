@@ -1,7 +1,7 @@
 import App from '../src/App.js';
 import { MissionUtils } from '@woowacourse/mission-utils';
 import { EOL as LINE_SEPARATOR } from 'os';
-import { ERROR_MESSAGE } from '../src/constants/constants.js';
+import { ERROR_MESSAGES } from '../src/constants/constants.js';
 
 const mockQuestions = (inputs) => {
   MissionUtils.Console.readLineAsync = jest.fn();
@@ -82,7 +82,7 @@ describe('예외 테스트', () => {
     await app.run();
 
     // then
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(ERROR_MESSAGE.INVALID_DATE));
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(ERROR_MESSAGES.INVALID_DATE));
   });
 
   test('주문 예외 테스트', async () => {
@@ -96,6 +96,6 @@ describe('예외 테스트', () => {
     await app.run();
 
     // then
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(ERROR_MESSAGE.INVALID_ORDER));
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(ERROR_MESSAGES.INVALID_ORDER));
   });
 });
