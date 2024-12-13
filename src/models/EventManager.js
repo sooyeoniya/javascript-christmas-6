@@ -1,4 +1,4 @@
-import { MENUS, WEEKEND_INDEX, SPECIAL_DAYS, NONE, WEEK_DISCOUNT } from '../constants/constants.js';
+import { MENUS, WEEKEND_INDEX, SPECIAL_DAYS, NONE, WEEK_DISCOUNT, TOTAL_DISCOUNT, BADGE } from '../constants/constants.js';
 
 class EventManager {
   /** @type {number} 크리스마스 디데이 할인 */ #ddayDiscount = 0;
@@ -109,12 +109,12 @@ class EventManager {
    */
   setEventBadge() {
     const totalDiscount = this.getTotalDiscount();
-    if (totalDiscount >= 20_000) {
-      this.#badge = '산타';
-    } else if (totalDiscount >= 10_000) {
-      this.#badge = '트리';
-    } else if (totalDiscount >= 5_000) {
-      this.#badge = '별';
+    if (totalDiscount >= TOTAL_DISCOUNT.SANTA) {
+      this.#badge = BADGE[TOTAL_DISCOUNT.SANTA];
+    } else if (totalDiscount >= TOTAL_DISCOUNT.TREE) {
+      this.#badge = BADGE[TOTAL_DISCOUNT.TREE];
+    } else if (totalDiscount >= TOTAL_DISCOUNT.STAR) {
+      this.#badge = BADGE[TOTAL_DISCOUNT.STAR];
     }
   }
 

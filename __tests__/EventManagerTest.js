@@ -1,3 +1,4 @@
+import { BADGE, NONE, TOTAL_DISCOUNT } from '../src/constants/constants.js';
 import EventManager from '../src/models/EventManager.js';
 import getTotalPriceBeforeDiscount from '../src/utils/getTotalPriceBeforeDiscount.js';
 
@@ -92,10 +93,10 @@ describe('EventManager 클래스 테스트', () => {
   });
 
   test.each([
-    ['총혜택 금액이 2만원 이상인 경우', 21_000, '산타'],
-    ['총혜택 금액이 1만원 이상인 경우', 11_000, '트리'],
-    ['총혜택 금액이 5천원 이상인 경우', 5_000, '별'],
-    ['총혜택 금액이 5천원 미만인 경우', 4_000, '없음'],
+    ['총혜택 금액이 2만원 이상인 경우', 21_000, BADGE[TOTAL_DISCOUNT.SANTA]],
+    ['총혜택 금액이 1만원 이상인 경우', 11_000, BADGE[TOTAL_DISCOUNT.TREE]],
+    ['총혜택 금액이 5천원 이상인 경우', 5_000, BADGE[TOTAL_DISCOUNT.STAR]],
+    ['총혜택 금액이 5천원 미만인 경우', 4_000, NONE],
   ])('setEventBadge 메서드 테스트: %s', (_, totalDiscount, expectedBadge) => {
     // given    
     const eventManager = new EventManager(1, menuObj);

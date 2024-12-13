@@ -1,7 +1,7 @@
 import App from '../src/App.js';
 import { MissionUtils } from '@woowacourse/mission-utils';
 import { EOL as LINE_SEPARATOR } from 'os';
-import { ERROR_MESSAGES } from '../src/constants/constants.js';
+import { ERROR_MESSAGES, NONE } from '../src/constants/constants.js';
 
 const mockQuestions = (inputs) => {
   MissionUtils.Console.readLineAsync = jest.fn();
@@ -64,7 +64,7 @@ describe('기능 테스트', () => {
     await app.run();
 
     // then
-    const expected = ['<혜택 내역>' + LINE_SEPARATOR + '없음'];
+    const expected = ['<혜택 내역>' + LINE_SEPARATOR + NONE];
 
     expectLogContains(getOutput(logSpy), expected);
   });

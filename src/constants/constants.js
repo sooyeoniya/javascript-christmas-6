@@ -4,6 +4,18 @@ export const NONE = '없음';
 export const WEEKEND_INDEX = Object.freeze([1, 2]);
 export const SPECIAL_DAYS = Object.freeze([3, 10, 17, 24, 25, 31]);
 
+export const TOTAL_DISCOUNT = Object.freeze({
+  SANTA: 20_000,
+  TREE: 10_000,
+  STAR: 5_000,
+});
+
+export const BADGE = Object.freeze({
+  [TOTAL_DISCOUNT.SANTA]: '산타',
+  [TOTAL_DISCOUNT.TREE]: '트리',
+  [TOTAL_DISCOUNT.STAR]: '별',
+});
+
 export const MENUS = Object.freeze([
   { type: 'appetizer', name: '양송이수프', price: 6_000 },
   { type: 'appetizer', name: '타파스', price: 5_500 },
