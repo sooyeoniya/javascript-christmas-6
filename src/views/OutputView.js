@@ -53,14 +53,14 @@ const OutputView = {
    * @param {{ giftMenu: string, quantity: number }} gifts
   */
   printGift(gifts) {
-    Console.print('<증정 메뉴>');
+    Console.print('\n<증정 메뉴>');
     let giftString = '없음';
     if (gifts) giftString = `${gifts.giftMenu} ${gifts.quantity}개`;
     Console.print(giftString);
   },
 
   printDiscount(eventList) {
-    Console.print('<혜택 내역>');
+    Console.print('\n<혜택 내역>');
     if (
       eventList.dday === 0 
       && eventList.weekday === 0
@@ -79,17 +79,17 @@ const OutputView = {
   },
 
   printTotalDiscount(totalDiscount) {
-    Console.print('<총혜택 금액>');
-    Console.print(`${parser.numberToPrice(totalDiscount)}원`);
+    Console.print('\n<총혜택 금액>');
+    Console.print(`-${parser.numberToPrice(totalDiscount)}원`);
   },
 
   printTotalPaymentAmount(totalPaymentAmount) {
-    Console.print('<할인 후 예상 결제 금액>');
+    Console.print('\n<할인 후 예상 결제 금액>');
     Console.print(`${parser.numberToPrice(totalPaymentAmount)}원`);
   },
 
   printBadge(badge) {
-    Console.print('<12월 이벤트 배지>');
+    Console.print('\n<12월 이벤트 배지>');
     Console.print(`${badge}`);
   },
 }
