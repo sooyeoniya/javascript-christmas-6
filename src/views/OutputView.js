@@ -59,23 +59,17 @@ const OutputView = {
     Console.print(giftString);
   },
 
-  printDiscount(eventList) {
+  printDiscount({ dday, weekday, weekend, special, giftPrice }) {
     Console.print('\n<혜택 내역>');
-    if (
-      eventList.dday === 0 
-      && eventList.weekday === 0
-      && eventList.weekend === 0
-      && eventList.special === 0 
-      && eventList.giftPrice === 0
-    ) {
+    if (dday === 0 && weekday === 0 && weekend === 0 && special === 0 && giftPrice === 0) {
       Console.print('없음');
       return;
     }
-    if (eventList.dday !== 0) Console.print(`크리스마스 디데이 할인: -${parser.numberToPrice(eventList.dday)}원`);
-    if (eventList.weekday !== 0) Console.print(`평일 할인: -${parser.numberToPrice(eventList.weekday)}원`);
-    if (eventList.weekend !== 0) Console.print(`주말 할인: -${parser.numberToPrice(eventList.weekend)}원`);
-    if (eventList.special !== 0) Console.print(`특별 할인: -${parser.numberToPrice(eventList.special)}원`);
-    if (eventList.giftPrice !== 0) Console.print(`증정 이벤트: -${parser.numberToPrice(eventList.giftPrice)}원`);
+    if (dday !== 0) Console.print(`크리스마스 디데이 할인: -${parser.numberToPrice(dday)}원`);
+    if (weekday !== 0) Console.print(`평일 할인: -${parser.numberToPrice(weekday)}원`);
+    if (weekend !== 0) Console.print(`주말 할인: -${parser.numberToPrice(weekend)}원`);
+    if (special !== 0) Console.print(`특별 할인: -${parser.numberToPrice(special)}원`);
+    if (giftPrice !== 0) Console.print(`증정 이벤트: -${parser.numberToPrice(giftPrice)}원`);
   },
 
   printTotalDiscount(totalDiscount) {

@@ -15,15 +15,17 @@ class Controller {
     const eventManager = new EventManager(date, menuObj);
     const totalPrice = getTotalPriceBeforeDiscount(menuObj);
 
-    if (totalPrice >= 10_000) {
-      eventManager.calculateDdayDiscount(date); // 크리스마스 디데이 할인
-      eventManager.calculateWeekDiscount(date, menuObj); // 평일, 주말 할인
-      eventManager.calculateSpecialDiscount(date); // 특별 할인
-      eventManager.calculateGiftsInfo(totalPrice); // 증정 이벤트
-      eventManager.setEventBadge(); // 배지
-    }
+    if (totalPrice >= 10_000) this.#manageEvent(eventManager, date, menuObj, totalPrice);
 
     OutputView.printResult(date, menuObj, totalPrice, eventManager.getEventList(totalPrice));
+  }
+
+  #manageEvent(eventManager, date, menuObj, totalPrice) {
+    eventManager.calculateDdayDiscount(date); // 크리스마스 디데이 할인
+    eventManager.calculateWeekDiscount(date, menuObj); // 평일, 주말 할인
+    eventManager.calculateSpecialDiscount(date); // 특별 할인
+    eventManager.calculateGiftsInfo(totalPrice); // 증정 이벤트
+    eventManager.setEventBadge(); // 배지
   }
 
   async #getValidatedDate() {
@@ -31,7 +33,6 @@ class Controller {
       const date = await InputView.readDate();
       const dateNum = parser.stringToNumber(date);
       validateDate(dateNum);
-
       return dateNum;
     } catch (error) {
       OutputView.printErrorMessage(error.message);
@@ -45,9 +46,7 @@ class Controller {
       const menuArray = parser.stringToArray(menus);
       const parsedMenuArray = parser.deleteEmptyValue(menuArray);
       validateMenu(parsedMenuArray);
-
-      // [ { menu: '티본스테이크', quantity: 1 }, ]
-      return parser.splitMenuAndQuantity(menuArray);
+      return parser.splitMenuAndQuantity(menuArray); // [ { menu: '티본스테이크', quantity: 1 }, ]
     } catch (error) {
       OutputView.printErrorMessage(error.message);
       return this.#getValidatedMenu();

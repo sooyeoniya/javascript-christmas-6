@@ -24,11 +24,8 @@ const numberToPrice = (number) => {
 const splitMenuAndQuantity = (menuArray) => {
   return menuArray.map((item) => {
     const menuAndQuantity = item.split('-');
-    return { 
-      menu: menuAndQuantity[0].trim(), 
-      quantity: stringToNumber(menuAndQuantity[1].trim())
-    };
-  })
+    return { menu: menuAndQuantity[0].trim(), quantity: stringToNumber(menuAndQuantity[1].trim()) };
+  });
 }
 
 const parser = {
