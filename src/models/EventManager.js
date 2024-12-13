@@ -6,9 +6,9 @@ class EventManager {
   /** @type {number} 주말 할인 */ #weekendDiscount = 0;
   /** @type {number} 특별 할인 */ #specialDiscount = 0;
   /** @type {{ giftMenu: string, quantity: number }} 증정 메뉴 정보 */ #gifts;
-  /** @type {string} 배지 이름 */ #badge;
+  /** @type {string} 배지 이름 */ #badge = '없음';
 
-  getEventList() {
+  getEventList(totalPrice) {
     return {
       dday: this.#ddayDiscount,
       weekday: this.#weekdayDiscount,
@@ -16,6 +16,9 @@ class EventManager {
       special: this.#specialDiscount,
       gifts: this.#gifts,
       badge: this.#badge,
+      giftPrice: this.getGiftsPrice(),
+      totalDiscount: this.getTotalDiscount(),
+      totalPaymentAmount: totalPrice - this.getTotalDiscountExceptionGiftsPrice(),
     }
   }
 
@@ -25,7 +28,7 @@ class EventManager {
    * @returns {number}
    */
   getTotalDiscount() {
-    return this.#ddayDiscount + this.#weekdayDiscount + this.#weekendDiscount + this.#specialDiscount + this.#getGiftsPrice();
+    return this.#ddayDiscount + this.#weekdayDiscount + this.#weekendDiscount + this.#specialDiscount + this.getGiftsPrice();
   }
 
   /**
@@ -34,16 +37,19 @@ class EventManager {
    * @returns {number}
    */
   getTotalDiscountExceptionGiftsPrice() {
-    return this.getTotalDiscount() - this.#getGiftsPrice();
+    return this.getTotalDiscount() - this.getGiftsPrice();
   }
 
   /**
    * 증정 상품의 총 금액을 반환한다.
    * @returns {number}
    */
-  #getGiftsPrice() {
-    const price = MENUS.find((menuInfo) => this.#gifts.giftMenu === menuInfo.name).price;
-    return this.#gifts.quantity * price;
+  getGiftsPrice() {
+    if (this.#gifts) {
+      const price = MENUS.find((menuInfo) => this.#gifts.giftMenu === menuInfo.name).price;
+      return this.#gifts.quantity * price;
+    }
+    return 0;
   }
 
   /**
@@ -98,18 +104,12 @@ class EventManager {
    */
   setEventBadge() {
     const totalDiscount = this.getTotalDiscount();
-    switch (totalDiscount) {
-      case 20_000: 
-        this.#badge = '산타';
-        break;
-      case 10_000:
-        this.#badge = '트리';
-        break;
-      case 5_000:
-        this.#badge = '별';
-        break;
-      default: 
-      this.#badge = '없음';
+    if (totalDiscount >= 20_000) {
+      this.#badge = '산타';
+    } else if (totalDiscount >= 10_000) {
+      this.#badge = '트리';
+    } else if (totalDiscount >= 5_000) {
+      this.#badge = '별';
     }
   }
 

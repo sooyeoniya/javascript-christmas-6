@@ -23,7 +23,7 @@ class Controller {
       eventManager.setEventBadge(); // 배지
     }
 
-    OutputView.printResult(date, menuObj, totalPrice);
+    OutputView.printResult(date, menuObj, totalPrice, eventManager.getEventList(totalPrice));
   }
 
   async #getValidatedDate() {

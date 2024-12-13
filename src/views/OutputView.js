@@ -23,13 +23,17 @@ const OutputView = {
    * [ { menu: '티본스테이크', quantity: 1 }, ]
    * @param {number} date
    * @param {Array<{ menu: string, quantity: number }>} menuObj
-   * @param {{ giftMenu: string, quantity: number }} gifts
+   * @param eventList
    */
-  printResult(date, menuObj, totalPrice, gifts) {
+  printResult(date, menuObj, totalPrice, eventList) {
     Console.print(OUTPUT_MESSAGES.RESULT_START(date));
     this.printMenu(menuObj);
     this.printTotalPriceBeforeDiscount(totalPrice);
-    this.printGift(gifts);
+    this.printGift(eventList.gifts);
+    this.printDiscount(eventList);
+    this.printTotalDiscount(eventList.totalDiscount);
+    this.printTotalPaymentAmount(eventList.totalPaymentAmount);
+    this.printBadge(eventList.badge);
   },
 
   printMenu(menuObj) {
@@ -49,26 +53,45 @@ const OutputView = {
    * @param {{ giftMenu: string, quantity: number }} gifts
   */
   printGift(gifts) {
+    Console.print('<증정 메뉴>');
     let giftString = '없음';
     if (gifts) giftString = `${gifts.giftMenu} ${gifts.quantity}개`;
     Console.print(giftString);
   },
 
+  printDiscount(eventList) {
+    Console.print('<혜택 내역>');
+    if (
+      eventList.dday === 0 
+      && eventList.weekday === 0
+      && eventList.weekend === 0
+      && eventList.special === 0 
+      && eventList.giftPrice === 0
+    ) {
+      Console.print('없음');
+      return;
+    }
+    if (eventList.dday !== 0) Console.print(`크리스마스 디데이 할인: -${parser.numberToPrice(eventList.dday)}원`);
+    if (eventList.weekday !== 0) Console.print(`평일 할인: -${parser.numberToPrice(eventList.weekday)}원`);
+    if (eventList.weekend !== 0) Console.print(`주말 할인: -${parser.numberToPrice(eventList.weekend)}원`);
+    if (eventList.special !== 0) Console.print(`특별 할인: -${parser.numberToPrice(eventList.special)}원`);
+    if (eventList.giftPrice !== 0) Console.print(`증정 이벤트: -${parser.numberToPrice(eventList.giftPrice)}원`);
+  },
 
-//   <증정 메뉴>
-// 없음
- 
-// <혜택 내역>
-// 없음
- 
-// <총혜택 금액>
-// 0원
- 
-// <할인 후 예상 결제 금액>
-// 8,500원
- 
-// <12월 이벤트 배지>
-// 없음
+  printTotalDiscount(totalDiscount) {
+    Console.print('<총혜택 금액>');
+    Console.print(`${parser.numberToPrice(totalDiscount)}원`);
+  },
+
+  printTotalPaymentAmount(totalPaymentAmount) {
+    Console.print('<할인 후 예상 결제 금액>');
+    Console.print(`${parser.numberToPrice(totalPaymentAmount)}원`);
+  },
+
+  printBadge(badge) {
+    Console.print('<12월 이벤트 배지>');
+    Console.print(`${badge}`);
+  },
 }
 
 export default OutputView;
