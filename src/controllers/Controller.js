@@ -5,6 +5,7 @@ import InputView from '../views/InputView.js';
 import OutputView from '../views/OutputView.js';
 import EventManager from '../models/EventManager.js';
 import getTotalPriceBeforeDiscount from '../utils/getTotalPriceBeforeDiscount.js';
+import { MINIMUM_PRICE } from '../constants/constants.js';
 
 class Controller {
   async start() {
@@ -15,7 +16,7 @@ class Controller {
     const eventManager = new EventManager(date, menuObj);
     const totalPrice = getTotalPriceBeforeDiscount(menuObj);
 
-    if (totalPrice >= 10_000) this.#manageEvent(eventManager, date, menuObj, totalPrice);
+    if (totalPrice >= MINIMUM_PRICE) this.#manageEvent(eventManager, date, menuObj, totalPrice);
 
     OutputView.printResult(date, menuObj, totalPrice, eventManager.getEventList(totalPrice));
   }

@@ -1,4 +1,4 @@
-import { MENUS, WEEKEND_INDEX, SPECIAL_DAYS } from '../constants/constants.js';
+import { MENUS, WEEKEND_INDEX, SPECIAL_DAYS, NONE, WEEK_DISCOUNT } from '../constants/constants.js';
 
 class EventManager {
   /** @type {number} 크리스마스 디데이 할인 */ #ddayDiscount = 0;
@@ -6,7 +6,7 @@ class EventManager {
   /** @type {number} 주말 할인 */ #weekendDiscount = 0;
   /** @type {number} 특별 할인 */ #specialDiscount = 0;
   /** @type {{ giftMenu: string, quantity: number }} 증정 메뉴 정보 */ #gifts;
-  /** @type {string} 배지 이름 */ #badge = '없음';
+  /** @type {string} 배지 이름 */ #badge = NONE;
 
   getEventList(totalPrice) {
     return {
@@ -57,8 +57,12 @@ class EventManager {
    * @param {number} date 
    */
   calculateDdayDiscount(date) {
-    if (date >= 1 && date <= 25) {
-      this.#ddayDiscount = 1_000 + 100 * (date - 1);
+    const minimumDay = 1;
+    const maximumDay = 25;
+    const defaultPrice = 1_000;
+    const incrementalPrice = 100;
+    if (date >= minimumDay && date <= maximumDay) {
+      this.#ddayDiscount = defaultPrice + incrementalPrice * (date - 1);
     }
   }
 
@@ -91,7 +95,8 @@ class EventManager {
    * @param {number} totalPrice 
    */
   calculateGiftsInfo(totalPrice) {
-    if (totalPrice >= 120_000) {
+    const maximumPrice = 120_000;
+    if (totalPrice >= maximumPrice) {
       this.#gifts = { giftMenu: '샴페인', quantity: 1 };
     }
   }
@@ -122,7 +127,7 @@ class EventManager {
     const filteredMenus = MENUS.filter((menuInfo) => {
       return onlyMenuNameArray.includes(menuInfo.name) && menuInfo.type === 'main'
     });
-    if (filteredMenus) filteredMenus.forEach(({ quantity }) => this.#weekendDiscount += quantity * 2_023);
+    if (filteredMenus) filteredMenus.forEach(({ quantity }) => this.#weekendDiscount += quantity * WEEK_DISCOUNT);
   }
 
   /**
@@ -134,7 +139,7 @@ class EventManager {
     const filteredMenus = MENUS.filter((menuInfo) => {
       return onlyMenuNameArray.includes(menuInfo.name) && menuInfo.type === 'dessert'
     });
-    if (filteredMenus) filteredMenus.forEach(({ quantity }) => this.#weekdayDiscount += quantity * 2_023);
+    if (filteredMenus) filteredMenus.forEach(({ quantity }) => this.#weekdayDiscount += quantity * WEEK_DISCOUNT);
   }
 }
 

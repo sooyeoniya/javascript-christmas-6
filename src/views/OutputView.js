@@ -1,5 +1,5 @@
 import { Console } from '@woowacourse/mission-utils';
-import { OUTPUT_MESSAGES } from '../constants/constants.js';
+import { NONE, OUTPUT_MESSAGES } from '../constants/constants.js';
 import parser from '../utils/parser.js';
 
 const OutputView = {
@@ -54,7 +54,7 @@ const OutputView = {
   */
   printGift(gifts) {
     Console.print('\n<증정 메뉴>');
-    let giftString = '없음';
+    let giftString = NONE;
     if (gifts) giftString = `${gifts.giftMenu} ${gifts.quantity}개`;
     Console.print(giftString);
   },
@@ -62,7 +62,7 @@ const OutputView = {
   printDiscount({ dday, weekday, weekend, special, giftPrice }) {
     Console.print('\n<혜택 내역>');
     if (dday === 0 && weekday === 0 && weekend === 0 && special === 0 && giftPrice === 0) {
-      Console.print('없음');
+      Console.print(NONE);
       return;
     }
     if (dday !== 0) Console.print(`크리스마스 디데이 할인: -${parser.numberToPrice(dday)}원`);

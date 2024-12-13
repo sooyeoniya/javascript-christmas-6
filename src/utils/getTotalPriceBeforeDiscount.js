@@ -13,7 +13,7 @@ const getTotalPriceBeforeDiscount = (menuObj) => {
   });
 
   let totalPrice = 0;
-  filteredMenus.forEach(({price, quantity }) => totalPrice += price * quantity);
+  filteredMenus.forEach(({ price, quantity }) => totalPrice += price * quantity);
   return totalPrice;
 }
 

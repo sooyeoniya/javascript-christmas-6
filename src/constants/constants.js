@@ -1,3 +1,6 @@
+export const MINIMUM_PRICE = 10_000;
+export const WEEK_DISCOUNT = 2_023;
+export const NONE = '없음';
 export const WEEKEND_INDEX = Object.freeze([1, 2]);
 export const SPECIAL_DAYS = Object.freeze([3, 10, 17, 24, 25, 31]);
 

@@ -9,7 +9,9 @@ const isInteger = (date) => {
 }
 
 const isInRange = (date) => {
-  return 1 <= date && date <= 31;
+  const minimumDate = 1;
+  const maximumDate = 31;
+  return minimumDate <= date && date <= maximumDate;
 }
 
 const validateDate = (date) => {
