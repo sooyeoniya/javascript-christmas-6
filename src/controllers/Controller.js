@@ -10,7 +10,7 @@ class Controller {
     const date = await this.#getValidatedDate();
     const menuObj = await this.#getValidatedMenu();
 
-    // OutputView.printResult();
+    OutputView.printResult(date, menuObj);
   }
 
   async #getValidatedDate() {

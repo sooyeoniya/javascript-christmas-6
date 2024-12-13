@@ -19,13 +19,20 @@ const OutputView = {
 
   /**
    * 전체 결과를 출력한다.
+   * [ { menu: '티본스테이크', quantity: 1 }, ]
+   * @param {number} date
+   * @param {Array<{ menu: string, quantity: number }>} menuObj
    */
-  printResult(date) {
+  printResult(date, menuObj) {
     Console.print(OUTPUT_MESSAGES.RESULT_START(date));
+    this.printMenu(menuObj);
   },
 
-  printMenu() {
+  printMenu(menuObj) {
     Console.print('<주문 메뉴>');
+    menuObj.forEach(({ menu, quantity }) => {
+      Console.print(`${menu} ${quantity}개`);
+    });
   },
 }
 
