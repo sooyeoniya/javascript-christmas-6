@@ -16,8 +16,11 @@ class Controller {
     const totalPrice = getTotalPriceBeforeDiscount(menuObj);
 
     if (totalPrice >= 10_000) {
-      eventManager.calculateDdayDiscount(date);
-      eventManager.calculateWeekDiscount(date, menuObj);
+      eventManager.calculateDdayDiscount(date); // 크리스마스 디데이 할인
+      eventManager.calculateWeekDiscount(date, menuObj); // 평일, 주말 할인
+      eventManager.calculateSpecialDiscount(date); // 특별 할인
+      eventManager.calculateGiftsInfo(totalPrice); // 증정 이벤트
+      eventManager.setEventBadge(); // 배지
     }
 
     OutputView.printResult(date, menuObj, totalPrice);

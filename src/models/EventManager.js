@@ -1,12 +1,50 @@
-import { MENUS, WEEKEND_INDEX } from '../constants/constants.js';
+import { MENUS, WEEKEND_INDEX, SPECIAL_DAYS } from '../constants/constants.js';
 
 class EventManager {
   /** @type {number} 크리스마스 디데이 할인 */ #ddayDiscount = 0;
   /** @type {number} 평일 할인 */ #weekdayDiscount = 0;
   /** @type {number} 주말 할인 */ #weekendDiscount = 0;
   /** @type {number} 특별 할인 */ #specialDiscount = 0;
-  /** @type {{ giftMenu: string, quantity: number }} 증정 이벤트 */ #gifts;
+  /** @type {{ giftMenu: string, quantity: number }} 증정 메뉴 정보 */ #gifts;
   /** @type {string} 배지 이름 */ #badge;
+
+  getEventList() {
+    return {
+      dday: this.#ddayDiscount,
+      weekday: this.#weekdayDiscount,
+      weekend: this.#weekendDiscount,
+      special: this.#specialDiscount,
+      gifts: this.#gifts,
+      badge: this.#badge,
+    }
+  }
+
+  /**
+   * 총 혜택 금액을 반환한다.
+   * 총혜택 금액 = 할인 금액의 합계 + 증정 메뉴의 가격
+   * @returns {number}
+   */
+  getTotalDiscount() {
+    return this.#ddayDiscount + this.#weekdayDiscount + this.#weekendDiscount + this.#specialDiscount + this.#getGiftsPrice();
+  }
+
+  /**
+   * 증정 상품 가격을 제외한 나머지 총 혜택 금액을 반환한다.
+   * 증정 삼품 가격 제외한 나머지 총 혜택 금액 = 총혜택 금액 - 증정 메뉴의 가격
+   * @returns {number}
+   */
+  getTotalDiscountExceptionGiftsPrice() {
+    return this.getTotalDiscount() - this.#getGiftsPrice();
+  }
+
+  /**
+   * 증정 상품의 총 금액을 반환한다.
+   * @returns {number}
+   */
+  #getGiftsPrice() {
+    const price = MENUS.find((menuInfo) => this.#gifts.giftMenu === menuInfo.name).price;
+    return this.#gifts.quantity * price;
+  }
 
   /**
    * 크리스마스 디데이 할인: 1,000원으로 시작하여 크리스마스가 다가올수록 날마다 할인 금액이 100원씩 증가
@@ -30,6 +68,49 @@ class EventManager {
       return;
     }
     this.#calculateWeekdayDiscount(menuObj);
+  }
+
+  /**
+   * 특별 할인: 이벤트 달력에 별이 있으면 총주문 금액에서 1,000원 할인
+   * @param {number} date 
+   */
+  calculateSpecialDiscount(date) {
+    if (SPECIAL_DAYS.includes(date)) {
+      this.#specialDiscount = 1_000;
+    }
+  }
+
+  /**
+   * 증정 이벤트: 할인 전 총주문 금액이 12만 원 이상일 때, 샴페인 1개 증정
+   * @param {number} totalPrice 
+   */
+  calculateGiftsInfo(totalPrice) {
+    if (totalPrice >= 120_000) {
+      this.#gifts = { giftMenu: '샴페인', quantity: 1 };
+    }
+  }
+
+  /**
+   * 총혜택 금액에 따라 다른 이벤트 배지를 부여한다.
+   * 5천 원 이상: 별
+   * 1만 원 이상: 트리
+   * 2만 원 이상: 산타
+   */
+  setEventBadge() {
+    const totalDiscount = this.getTotalDiscount();
+    switch (totalDiscount) {
+      case 20_000: 
+        this.#badge = '산타';
+        break;
+      case 10_000:
+        this.#badge = '트리';
+        break;
+      case 5_000:
+        this.#badge = '별';
+        break;
+      default: 
+      this.#badge = '없음';
+    }
   }
 
   /**

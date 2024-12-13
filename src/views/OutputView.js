@@ -45,7 +45,7 @@ const OutputView = {
   },
 
   /**
-   * 증정 매뉴 출력
+   * 증정 메뉴 출력
    * @param {{ giftMenu: string, quantity: number }} gifts
   */
   printGift(gifts) {
