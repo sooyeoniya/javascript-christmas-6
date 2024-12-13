@@ -71,6 +71,9 @@
 
   - [x] 통합 테스트: 입력 및 예외 테스트
   - [ ] 단위 테스트
+    - [x] validateDate 메서드 테스트
+    - [ ] validateMenu 메서드 테스트
+    - [ ] EventManager 클래스 테스트
 
 ## 기타
 
