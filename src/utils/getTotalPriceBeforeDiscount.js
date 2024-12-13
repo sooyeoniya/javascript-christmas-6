@@ -7,13 +7,13 @@ import { MENUS } from '../constants/constants.js';
  */
 const getTotalPriceBeforeDiscount = (menuObj) => {
   const onlyMenuNameArray = menuObj.map(({menu}) => menu);
-  const inputMenuArray = MENUS.filter((menuInfo) => onlyMenuNameArray.includes(menuInfo.name));
+  const filteredMenus = MENUS.filter((menuInfo) => onlyMenuNameArray.includes(menuInfo.name));
   menuObj.forEach(({ menu, quantity }) => {
-    inputMenuArray.find((menuInfo) => menuInfo.name === menu).quantity = quantity;
+    filteredMenus.find((menuInfo) => menuInfo.name === menu).quantity = quantity;
   });
 
   let totalPrice = 0;
-  inputMenuArray.forEach(({price, quantity }) => {
+  filteredMenus.forEach(({price, quantity }) => {
     totalPrice += price * quantity;
   });
 

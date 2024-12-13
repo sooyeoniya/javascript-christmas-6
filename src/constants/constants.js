@@ -1,3 +1,4 @@
+export const WEEKEND_INDEX = Object.freeze([1, 2]);
 
 export const MENUS = Object.freeze([
   { type: 'appetizer', name: '양송이수프', price: 6_000 },

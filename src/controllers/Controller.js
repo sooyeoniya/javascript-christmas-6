@@ -4,6 +4,7 @@ import validateDate from '../validations/validateDate.js';
 import InputView from '../views/InputView.js';
 import OutputView from '../views/OutputView.js';
 import EventManager from '../models/EventManager.js';
+import getTotalPriceBeforeDiscount from '../utils/getTotalPriceBeforeDiscount.js';
 
 class Controller {
   async start() {
@@ -12,8 +13,14 @@ class Controller {
     const menuObj = await this.#getValidatedMenu();
 
     const eventManager = new EventManager(date, menuObj);
+    const totalPrice = getTotalPriceBeforeDiscount(menuObj);
 
-    OutputView.printResult(date, menuObj);
+    if (totalPrice >= 10_000) {
+      eventManager.calculateDdayDiscount(date);
+      eventManager.calculateWeekDiscount(date, menuObj);
+    }
+
+    OutputView.printResult(date, menuObj, totalPrice);
   }
 
   async #getValidatedDate() {
