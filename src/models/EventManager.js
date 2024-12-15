@@ -123,11 +123,10 @@ class EventManager {
    * @param {Array<{ menu: string, quantity: number }>} menuObj 
    */
   #calculateWeekendDiscount(menuObj) {
-    const onlyMenuNameArray = menuObj.map(({menu}) => menu);
-    const filteredMenus = MENUS.filter((menuInfo) => {
-      return onlyMenuNameArray.includes(menuInfo.name) && menuInfo.type === MENU_TYPE.MAIN
+    menuObj.forEach(({ menu, quantity }) => {
+      const findMenu = MENUS.find((menuInfo) => menuInfo.name === menu && menuInfo.type === MENU_TYPE.MAIN);
+      if (findMenu) this.#weekendDiscount += quantity * WEEK_DISCOUNT;
     });
-    if (filteredMenus) filteredMenus.forEach(({ quantity }) => this.#weekendDiscount += quantity * WEEK_DISCOUNT);
   }
 
   /**
@@ -135,11 +134,10 @@ class EventManager {
    * @param {Array<{ menu: string, quantity: number }>} menuObj 
    */
   #calculateWeekdayDiscount(menuObj) {
-    const onlyMenuNameArray = menuObj.map(({menu}) => menu);
-    const filteredMenus = MENUS.filter((menuInfo) => {
-      return onlyMenuNameArray.includes(menuInfo.name) && menuInfo.type === MENU_TYPE.DESSERT
+    menuObj.forEach(({ menu, quantity }) => {
+      const findMenu = MENUS.find((menuInfo) => menuInfo.name === menu && menuInfo.type === MENU_TYPE.DESSERT);
+      if (findMenu) this.#weekdayDiscount += quantity * WEEK_DISCOUNT;
     });
-    if (filteredMenus) filteredMenus.forEach(({ quantity }) => this.#weekdayDiscount += quantity * WEEK_DISCOUNT);
   }
 }
 

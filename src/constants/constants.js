@@ -1,3 +1,5 @@
+import deepFreeze from '../utils/deepFreeze.js';
+
 export const MINIMUM_PRICE = 10_000;
 export const WEEK_DISCOUNT = 2_023;
 export const NONE = '없음';
@@ -23,7 +25,7 @@ export const MENU_TYPE = Object.freeze({
   DRINK: 'drink',
 })
 
-export const MENUS = Object.freeze([
+export const MENUS = deepFreeze([
   { type: MENU_TYPE.APPETIZER, name: '양송이수프', price: 6_000 },
   { type: MENU_TYPE.APPETIZER, name: '타파스', price: 5_500 },
   { type: MENU_TYPE.APPETIZER, name: '시저샐러드', price: 8_000 },

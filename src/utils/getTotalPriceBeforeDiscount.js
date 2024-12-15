@@ -7,13 +7,26 @@ import { MENUS } from '../constants/constants.js';
  */
 const getTotalPriceBeforeDiscount = (menuObj) => {
   const onlyMenuNameArray = menuObj.map(({menu}) => menu);
-  const filteredMenus = MENUS.filter((menuInfo) => onlyMenuNameArray.includes(menuInfo.name));
-  menuObj.forEach(({ menu, quantity }) => {
-    filteredMenus.find((menuInfo) => menuInfo.name === menu).quantity = quantity;
+  // 사용자가 입력한 메뉴들만 메뉴 정보 필터링하여 저장
+  // const filteredMenus = MENUS.filter((menuInfo) => onlyMenuNameArray.includes(menuInfo.name));
+  // 새 배열 만들어주는데, 현재 필터링된 메뉴 정보들에서 이름 정보가 같은 것에 quantity 추가
+  const newMenusInfo = MENUS.map((menuInfo) => {
+    // find 하여 해당하는 이름에 대한 quantity 정보 가져오기
+    const findQuantity = menuObj.find(({ menu }) => menu === menuInfo.name)?.quantity;
+    if (findQuantity) {
+      return {
+        ...menuInfo,
+        quantity: findQuantity,
+      }
+    }
+    return { 
+      ...menuInfo,
+      quantity: 0,
+    }
   });
 
   let totalPrice = 0;
-  filteredMenus.forEach(({ price, quantity }) => totalPrice += price * quantity);
+  newMenusInfo.forEach(({ price, quantity }) => totalPrice += price * quantity);
   return totalPrice;
 }
 
